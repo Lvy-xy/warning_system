@@ -39,6 +39,16 @@ jobs:
             exit 1
           fi
 
+          if [[ "${{ env.REGISTRY }}" =~ ^https?:// ]]; then
+            echo "::error::ACR_REGISTRY must not contain protocol. Example: registry.cn-beijing.aliyuncs.com"
+            exit 1
+          fi
+
+          if [[ "${{ env.IMAGE_NAME }}" != */* ]]; then
+            echo "::error::ACR_IMAGE_NAME must be in format <namespace>/<repository>. Example: myspace/warning-system"
+            exit 1
+          fi
+
       - name: Login to ACR
         uses: docker/login-action@v3
         with:
