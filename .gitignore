@@ -1,0 +1,18 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Build artifacts
+**/node_modules/
+**/dist/
+**/target/
+
+# Generated during restoration
+docker-app/
+restored_code/
+_extract_code_pdf.txt
+_extract_code_pdf.cleaned.txt
+_extract_manual_pdf.txt
+_class_markers.txt
