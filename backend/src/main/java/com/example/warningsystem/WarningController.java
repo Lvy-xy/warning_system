@@ -24,6 +24,21 @@ public class WarningController {
         seedData();
     }
 
+    @PostMapping("/auth/login")
+    public ApiResponse<Map<String, Object>> login(@RequestBody LoginRequest req) {
+        if (req == null || req.username == null || req.username.isBlank() || req.password == null || req.password.isBlank()) {
+            return ApiResponse.error("账号和密码不能为空");
+        }
+        if (!"admin".equals(req.username) || !"admin123".equals(req.password)) {
+            return ApiResponse.error("账号或密码错误");
+        }
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("token", UUID.randomUUID().toString().replace("-", ""));
+        data.put("username", req.username);
+        return ApiResponse.success(data);
+    }
+
     @GetMapping("/farm/tree")
     public ApiResponse<List<Map<String, Object>>> farmTree() {
         List<Map<String, Object>> tree = new ArrayList<>();
@@ -258,6 +273,11 @@ public class WarningController {
         public String zoneName;
         public String scheduledAt;
         public String status;
+    }
+
+    static class LoginRequest {
+        public String username;
+        public String password;
     }
 
     static class ControlTask {
